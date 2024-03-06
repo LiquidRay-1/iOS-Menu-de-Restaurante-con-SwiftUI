@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+//Nota para Git
 
 struct CheckoutView: View {
     
