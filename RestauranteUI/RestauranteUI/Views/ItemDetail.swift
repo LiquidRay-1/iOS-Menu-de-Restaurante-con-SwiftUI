@@ -9,6 +9,10 @@ import SwiftUI
 
 struct ItemDetail: View {
     
+    @EnvironmentObject var order: Order
+    
+    @State private var showPaymentAlert = false
+    
     let item: MenuItem //Almacena el item que se va almacenar
     
     var body: some View {
@@ -26,15 +30,27 @@ struct ItemDetail: View {
             }
             Text(item.description)
                 .padding()
+            Button("Añadir al pedido"){
+                order.add(item: item)
+                showPaymentAlert.toggle()
+            }
+            .buttonStyle(.borderedProminent)
             Spacer()
         }
         .navigationTitle(item.name)
         .navigationBarTitleDisplayMode(.inline)
+        //Alert
+        .alert("Artículo añadido al pedido", isPresented: $showPaymentAlert) {
+            //Botones
+        } message: {
+            Text("El artículo se ha añadido al pedido")
+        }
     }
 }
 
 #Preview {
     NavigationStack{
         ItemDetail(item: MenuItem.example)
+            .environmentObject(Order())
     }
 }
